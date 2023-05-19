@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vídeo Play</title>
+</head>
+<style>
+    #progresso {
+        height: 20px;
+        width: 500px;
+        border: solid 1px red;
+        background-color: black;
+    }
+    #progresso > div {
+        background-color: red;
+        color: white;
+        height: 100%;
+        text-align: right;
+        font-size: 14px;
+        width: 0%;
+    }
+    #play {
+        cursor: pointer;
+        height: 50px;
+        width: 70px;
+        color: red;
+        background-color: black;
+        margin: 5px;
+        border: 3px solid red;
+    }
+
+    #play:hover {
+        background-color: rgb(100, 4, 4);
+    }
+
+    #timer{
+        border: solid 1px red;
+        height: 20px;
+        width: 70px;
+        margin-left: 520px;
+        margin-top: -21px;
+        background-color: black;
+        color: red;
+    }
+
+</style>    
+<body>
+    <video id="meuVideo" width="800" height="450" controlsList="nodownload">
+        <source src="http://files.cod3r.com.br/curso-web/video.mp4" type="video/mp4">
+    </video>
+    
+    <div wm-progresso="meuVideo" id="progresso">
+        <div id="barra"></div>
+    </div>
+    
+    <div id="timer"></div>
+
+    <div>
+        <button id="play" onclick="start()">Play</button>
+    </div>
+    <script>
+        let iniciar = document.getElementById("play")
+        let video = document.getElementById("meuVideo")
+        let barra = document.getElementById("barra")
+        let timer = document.getElementById("timer")
+
+        function start() {
+            if(iniciar.innerText == 'Play') {
+                iniciar.innerText = 'Pause'
+                video.play()
+            } else {
+                iniciar.innerText = 'Play'
+                video.pause()
+            }
+            setInterval(function() {
+                const porcentagem = Math.round((video.currentTime / video.duration) * 100)
+                barra.style.width = `${porcentagem}%`
+                timer.innerHTML = `${video.currentTime.toFixed(2)}`
+            })
+        }
+    </script>
+</body>
+</html>
